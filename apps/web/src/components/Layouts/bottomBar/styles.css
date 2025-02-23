@@ -1,0 +1,7 @@
+.bottom_menu {
+  @apply fixed bottom-0 w-full;
+
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1); /* Sombra no topo */
+  z-index: 1000; /* Garante que fique acima de outros elementos */
+  background-color: #fff; /* Fundo branco para contraste */
+}

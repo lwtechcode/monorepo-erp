@@ -1,0 +1,28 @@
+{
+  "name": "@lib/tokens",
+  "version": "0.0.1",
+  "description": "Design Tokens - Biblioteca",
+  "scripts": {
+    "dictionary": "style-dictionary build",
+    "clear": "rm -fr ./temp",
+    "compile": "tsup && npm run clear",
+    "bundle": "npm run dictionary && npm run compile"
+  },
+  "devDependencies": {
+    "@lib/babel": "*",
+    "@lib/tsup": "*",
+    "@lib/typescript": "*",
+    "style-dictionary": "^3.7.0"
+  },
+  "license": "UNLICENSED",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.mjs",
+  "files": [
+    "dist/"
+  ],
+  "keywords": [
+    "design",
+    "tokens"
+  ]
+}

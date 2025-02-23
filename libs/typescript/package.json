@@ -1,0 +1,16 @@
+{
+  "name": "@lib/typescript",
+  "version": "0.0.0",
+  "description": "typescript config",
+  "peerDependencies": {
+    "typescript": "4.7.4"
+  },
+  "dependencies": {
+    "typescript": "4.7.4"
+  },
+  "license": "UNLICENSED",
+  "files": [
+    "base.json",
+    "react-library.json"
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "extends": "@lib/typescript/react-library.json",
+  "include": ["src", "../layouts/src/dashboard"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

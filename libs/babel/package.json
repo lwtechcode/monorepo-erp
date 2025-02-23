@@ -1,0 +1,27 @@
+{
+  "name": "@lib/babel",
+  "version": "0.0.0",
+  "description": "Babel - Configuração",
+  "peerDependencies": {
+    "@babel/core": "^7.18.6",
+    "@babel/preset-env": "^7.18.6",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
+    "babel-jest": "^28.1.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.18.6",
+    "@babel/preset-env": "^7.18.6",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
+    "babel-jest": "^28.1.0"
+  },
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "license": "UNLICENSED",
+  "keywords": [
+    "babel"
+  ]
+}

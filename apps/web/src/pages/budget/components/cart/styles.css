@@ -1,0 +1,54 @@
+.cart {
+  @apply flex
+  flex-col
+  shadow-sm 
+  px-2
+  rounded-lg
+  border
+  bg-white
+  mx-auto
+  my-3
+  cursor-pointer;
+
+  .__header {
+    @apply flex 
+    justify-between 
+    items-center 
+    border-b;
+
+    div {
+      @apply flex 
+      w-6 
+      h-6;
+    }
+  }
+
+  .__body {
+    @apply flex 
+    flex-row 
+    justify-between 
+    items-center 
+    gap-2
+    mx-3;
+  }
+
+  .__footer {
+    @apply flex 
+    flex-row 
+    my-3 
+    mx-3
+    justify-between 
+    place-items-end;
+
+    .__amount {
+      @apply flex 
+      justify-center 
+      items-center 
+      gap-2;
+
+      input {
+        @apply text-center;
+      }
+    }
+  }
+}

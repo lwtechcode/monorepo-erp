@@ -1,0 +1,24 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RESPONSE_MESSAGE = void 0;
+var RESPONSE_MESSAGE;
+(function (RESPONSE_MESSAGE) {
+    RESPONSE_MESSAGE["CREATED_SUCCESSFULLY"] = "Registro criado com sucesso";
+    RESPONSE_MESSAGE["CREATED_SUCCESSFULLIES"] = "Registros criados com sucesso";
+    RESPONSE_MESSAGE["UPDATED_SUCCESSFULLY"] = "Registro atualizado com sucesso";
+    RESPONSE_MESSAGE["DELETED_SUCCESSFULLY"] = "Registro exclu\u00EDdo com sucesso";
+    RESPONSE_MESSAGE["NOT_FOUND"] = "Registro n\u00E3o encontrado";
+    RESPONSE_MESSAGE["ALREADY_EXISTS"] = "O registro j\u00E1 existe";
+    RESPONSE_MESSAGE["ERROR_CREATING"] = "Erro ao criar o registro";
+    RESPONSE_MESSAGE["ERROR_UPDATING"] = "Erro ao atualizar o registro";
+    RESPONSE_MESSAGE["ERROR_DELETING"] = "Erro ao excluir o registro";
+    RESPONSE_MESSAGE["INVALID_DATA"] = "Dados inv\u00E1lidos para a opera\u00E7\u00E3o";
+    RESPONSE_MESSAGE["EMAIL_EXISTS"] = "E-mail n\u00E3o est\u00E1 dispon\u00EDvel para novo cadastro";
+    RESPONSE_MESSAGE["INVALID_LOGIN_DATA"] = "E-mail e/ou senha inv\u00E1lidos";
+    RESPONSE_MESSAGE["OPERATION_FAILED"] = "Falha na opera\u00E7\u00E3o";
+    RESPONSE_MESSAGE["UNAUTHORIZED_USER"] = "Usu\u00E1rio n\u00E3o autorizado";
+    RESPONSE_MESSAGE["INVALID_TOKEN"] = "Token inv\u00E1lido";
+    RESPONSE_MESSAGE["RESET_PASSWORD_EMAIL_SENT"] = "Se o e-mail fornecido estiver registrado em nossa base de dados, voc\u00EA receber\u00E1 um link para redefini\u00E7\u00E3o de senha por ele.";
+    RESPONSE_MESSAGE["PROVIDE_RECORD_ID"] = "Informe o id do registro.";
+    RESPONSE_MESSAGE["USER_NOT_FOUND"] = "Usu\u00E1rio inv\u00E1lido no sistema.";
+})(RESPONSE_MESSAGE || (exports.RESPONSE_MESSAGE = RESPONSE_MESSAGE = {}));

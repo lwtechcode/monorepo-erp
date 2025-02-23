@@ -1,0 +1,25 @@
+{
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"],
+      "env": [".env.development.local", ".env.production", ".env.local", ".env"]
+    },
+    "bundle": {
+      "dependsOn": ["^bundle"],
+      "outputs": ["dist/**"]
+    },
+    "lint": {
+      "outputs": []
+    },
+    "start": {
+      "dependsOn": ["^build"]
+    },
+    "dev": {
+      "cache": false
+    },
+    "test": {
+      "cache": true
+    }
+  }
+}

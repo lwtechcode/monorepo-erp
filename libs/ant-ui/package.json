@@ -1,0 +1,30 @@
+{
+  "name": "@ant-ui/react",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "bundle": "tsup"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.3.7",
+    "@lib/babel": "*",
+    "@lib/tokens": "*",
+    "@lib/typescript": "*",
+    "antd": "^5.19.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "vite": "^5.3.4"
+  },
+  "devDependencies": {
+    "@lib/tsup": "*",
+    "@types/react": "^18.2.56",
+    "@types/react-dom": "^18.2.19",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.6",
+    "tsup": "^8.2.2",
+    "typescript": "4.7.4"
+  }
+}

@@ -1,0 +1,7 @@
+.header {
+  @apply flex 
+  justify-end 
+  items-center
+  bg-white
+  p-[16px];
+}

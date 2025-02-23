@@ -1,0 +1,21 @@
+{
+  "name": "@lib/schemas",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "bundle": "tsup"
+  },
+  "dependencies": {
+    "@lib/typescript": "*",
+    "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "@lib/tsup": "*",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.6",
+    "typescript": "4.7.4"
+  }
+}

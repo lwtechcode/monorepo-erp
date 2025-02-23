@@ -1,0 +1,314 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id                String              @id @default(cuid())
+  name              String
+  active            Boolean             @default(true)
+  created_at        DateTime            @default(now())
+  updated_at        DateTime?           @updatedAt
+  User              User[]
+  Client            Client[]
+  Supplier          Supplier[]
+  PaymentMethod     PaymentMethod[]
+  ProductCategory   ProductCategory[]
+  BillToPay         BillToPay[]
+  Product           Product[]
+  UnitOfMeasurement UnitOfMeasurement[]
+  BillToReceive     BillToReceive[]
+  Sale              Sale[]
+  ProductSale       ProductSale[]
+  SalesBudget       SalesBudget[]
+  ProductSaleBudget ProductSaleBudget[]
+
+  @@map("companies")
+}
+
+model User {
+  id         String    @id @default(cuid())
+  name       String
+  email      String    @unique
+  phone      String?
+  password   String
+  active     Boolean   @default(true)
+  company    Company   @relation(fields: [company_id], references: [id])
+  company_id String
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+
+  @@map("users")
+}
+
+model Client {
+  id            String          @id @default(cuid())
+  name          String
+  birthDate     DateTime?
+  cpf           String?
+  gender        String?
+  rg            String?
+  email         String?
+  phone         String?
+  cep           String?
+  address       String?
+  number        String?
+  neighborhood  String?
+  city          String?
+  state         String?
+  complement    String?
+  observation   String?
+  company       Company         @relation(fields: [company_id], references: [id])
+  company_id    String
+  active        Boolean?        @default(true)
+  created_at    DateTime        @default(now())
+  updated_at    DateTime?       @updatedAt
+  BillToReceive BillToReceive[]
+  Sale          Sale[]
+  SalesBudget   SalesBudget[]
+
+  @@map("clients")
+}
+
+model Supplier {
+  id           String    @id @default(cuid())
+  name         String
+  cnpj         String?
+  email        String?
+  phone        String?
+  cep          String?
+  address      String?
+  number       String?
+  neighborhood String?
+  city         String?
+  state        String?
+  complement   String?
+  observation  String?
+  company      Company   @relation(fields: [company_id], references: [id])
+  company_id   String
+  active       Boolean?  @default(true)
+  created_at   DateTime  @default(now())
+  updated_at   DateTime? @updatedAt
+  Product      Product[]
+
+  @@map("suppliers")
+}
+
+model PaymentMethod {
+  id          String        @id @default(cuid())
+  name        String
+  tax         Decimal?      @default(0) @db.Decimal(9, 2)
+  observation String?
+  active      Boolean?      @default(true)
+  company     Company       @relation(fields: [company_id], references: [id])
+  company_id  String
+  created_at  DateTime      @default(now())
+  updated_at  DateTime?     @updatedAt
+  Sale        Sale[]
+  SalesBudget SalesBudget[]
+
+  @@map("payment_methods")
+}
+
+model ProductCategory {
+  id          String    @id @default(cuid())
+  name        String
+  observation String?
+  active      Boolean?  @default(true)
+  company     Company   @relation(fields: [company_id], references: [id])
+  company_id  String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime? @updatedAt
+  Product     Product[]
+
+  @@map("product_categories")
+}
+
+model BillToPay {
+  id                     String    @id @default(cuid())
+  description            String
+  due_date               DateTime
+  pay_date               DateTime?
+  value                  Decimal
+  added_value            Decimal?  @default(0) @db.Decimal(9, 2)
+  status                 Int?      @default(1)
+  creditor               String?
+  recurrence             Boolean?
+  number_of_installments Int?
+  installment            Int?
+  observation            String?
+  company                Company   @relation(fields: [company_id], references: [id])
+  company_id             String
+  created_at             DateTime  @default(now())
+  updated_at             DateTime? @updatedAt
+
+  @@map("bills_to_pay")
+}
+
+model BillToReceive {
+  id           String    @id @default(cuid())
+  status       Int?      @default(1)
+  value        Decimal   @default(0)
+  due_date     DateTime
+  receipt_date DateTime?
+  description  String
+  client_id    String?
+  client       Client?   @relation(fields: [client_id], references: [id])
+  observation  String?
+  company      Company   @relation(fields: [company_id], references: [id])
+  company_id   String
+  created_at   DateTime  @default(now())
+  updated_at   DateTime? @updatedAt
+
+  // added_value            Decimal?  @default(0) @db.Decimal(9, 2)
+  // recurrence             Boolean?
+  // number_of_installments Int?
+  // installment            Int?
+
+  @@map("bills_to_receive")
+}
+
+model Product {
+  id                  String              @id @default(cuid())
+  name                String
+  sku                 String?
+  bar_code            String?             @unique
+  manufacturer        String?
+  product_origin      String?
+  cost_price          Decimal             @default(0) @db.Decimal(19, 2)
+  sale_price          Decimal             @default(0) @db.Decimal(19, 2)
+  stock               Int?                @default(0)
+  description         String?
+  observation         String?
+  location_in_store   String?
+  model               String?
+  discount_tax        Decimal?            @default(0) @db.Decimal(4, 2)
+  supplier            Supplier?           @relation(fields: [supplier_id], references: [id])
+  supplier_id         String?
+  company             Company             @relation(fields: [company_id], references: [id])
+  company_id          String
+  productCategory     ProductCategory?    @relation(fields: [product_category_id], references: [id])
+  product_category_id String?
+  active              Boolean?            @default(true)
+  created_at          DateTime            @default(now())
+  updated_at          DateTime?           @updatedAt
+  UnitOfMeasurement   UnitOfMeasurement?  @relation(fields: [unitOfMeasurementId], references: [id])
+  unitOfMeasurementId String?
+  ProductSale         ProductSale[]
+  ProductSaleBudget   ProductSaleBudget[]
+
+  @@map("products")
+}
+
+model Permission {
+  id          String    @id @default(cuid())
+  description String
+  code        Int
+  created_at  DateTime  @default(now())
+  updated_at  DateTime? @updatedAt
+
+  @@map("permissions")
+}
+
+model UnitOfMeasurement {
+  id           String    @id @default(cuid())
+  name         String
+  abbreviation String
+  active       Boolean?  @default(true)
+  company      Company   @relation(fields: [company_id], references: [id])
+  company_id   String
+  created_at   DateTime  @default(now())
+  updated_at   DateTime? @updatedAt
+  Product      Product[]
+
+  @@map("units_of_measurement")
+}
+
+model Sale {
+  id                String        @id @default(cuid())
+  status            Int
+  total_value       Decimal       @default(0) @db.Decimal(19, 2)
+  discount_value    Decimal       @default(0) @db.Decimal(19, 2)
+  increase_value    Decimal       @default(0) @db.Decimal(19, 2)
+  tax_payment_value Decimal       @default(0) @db.Decimal(19, 2)
+  client            Client?       @relation(fields: [client_id], references: [id])
+  client_id         String?
+  payment           PaymentMethod @relation(fields: [payment_method_id], references: [id])
+  payment_method_id String
+
+  company     Company       @relation(fields: [company_id], references: [id])
+  company_id  String
+  ProductSale ProductSale[]
+
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+
+  @@map("sales")
+}
+
+model ProductSale {
+  id               String  @id @default(cuid())
+  name             String
+  original_price   Decimal @db.Decimal(19, 2)
+  discounted_price Decimal @db.Decimal(19, 2)
+  qty              Decimal @db.Decimal(19, 2)
+
+  product    Product @relation(fields: [product_id], references: [id])
+  product_id String
+  sale       Sale    @relation(fields: [sale_id], references: [id])
+  sale_id    String
+  company    Company @relation(fields: [company_id], references: [id])
+  company_id String
+
+  created_at    DateTime     @default(now())
+  updated_at    DateTime?    @updatedAt
+  SalesBudget   SalesBudget? @relation(fields: [salesBudgetId], references: [id])
+  salesBudgetId String?
+
+  @@map("products_sale")
+}
+
+model SalesBudget {
+  id                String              @id @default(cuid())
+  total_value       Decimal             @default(0) @db.Decimal(19, 2)
+  discount_value    Decimal             @default(0) @db.Decimal(19, 2)
+  increase_value    Decimal             @default(0) @db.Decimal(19, 2)
+  tax_payment_value Decimal             @default(0) @db.Decimal(19, 2)
+  client            Client?             @relation(fields: [client_id], references: [id])
+  client_id         String?
+  payment           PaymentMethod       @relation(fields: [payment_method_id], references: [id])
+  payment_method_id String
+  observation       String?
+  company           Company             @relation(fields: [company_id], references: [id])
+  company_id        String
+  created_at        DateTime            @default(now())
+  updated_at        DateTime?           @updatedAt
+  active            Boolean             @default(true)
+
+  ProductSale       ProductSale[]
+  ProductSaleBudget ProductSaleBudget[]
+
+  @@map("sales_budgets")
+}
+
+model ProductSaleBudget {
+  id               String      @id @default(cuid())
+  name             String
+  original_price   Decimal     @db.Decimal(19, 2)
+  discounted_price Decimal     @db.Decimal(19, 2)
+  qty              Decimal     @db.Decimal(19, 2)
+  product          Product     @relation(fields: [product_id], references: [id])
+  product_id       String
+  sales_budget_id  String
+  sale_budget      SalesBudget @relation(fields: [sales_budget_id], references: [id])
+  company          Company     @relation(fields: [company_id], references: [id])
+  company_id       String
+  created_at       DateTime    @default(now())
+  updated_at       DateTime?   @updatedAt
+
+  @@map("products_sale_budget")
+}
