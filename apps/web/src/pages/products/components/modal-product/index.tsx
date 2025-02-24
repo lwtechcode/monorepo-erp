@@ -71,8 +71,8 @@ export function ModalProduct({
         const PAYLOAD: FormProduct = {
           name: data.name as string,
           discount_tax: data.discount_tax,
-          cost_price: String(data.cost_price),
-          sale_price: String(data.sale_price),
+          cost_price: Number(data.cost_price),
+          sale_price: Number(data.sale_price),
           product_category_id: data.product_category_id as string,
           supplier_id: data.supplier_id as string,
           manufacturer: data.manufacturer as string,
@@ -155,7 +155,7 @@ export function ModalProduct({
               </Grid.Col>
 
               <Grid.Col span={12}>
-                <Typography.Text>Preço de custo</Typography.Text>
+                <Typography.Text>Preço de custo*</Typography.Text>
 
                 <Input
                   value={values.cost_price as number}
@@ -173,7 +173,7 @@ export function ModalProduct({
               </Grid.Col>
 
               <Grid.Col span={12}>
-                <Typography.Text>Preço de venda</Typography.Text>
+                <Typography.Text>Preço de venda*</Typography.Text>
 
                 <Input
                   value={values.sale_price as number}

@@ -76,7 +76,10 @@ export default function BudgetPage() {
                   {Number(discount_tax) > 0 ? (
                     <Typography.Text>
                       {formatMoney(
-                        calcTaxDiscount(discount_tax as string, sale_price),
+                        calcTaxDiscount(
+                          discount_tax as string,
+                          String(sale_price),
+                        ),
                       )}
                     </Typography.Text>
                   ) : (
@@ -122,8 +125,8 @@ export default function BudgetPage() {
                 handleAddNewProduct({
                   id: PRODUCT_SELECTED.id as string,
                   product: PRODUCT_SELECTED.name,
-                  value_unit: PRODUCT_SELECTED.sale_price,
-                  total_value: PRODUCT_SELECTED.sale_price,
+                  value_unit: PRODUCT_SELECTED.sale_price as string,
+                  total_value: PRODUCT_SELECTED.sale_price as string,
                   quantity: '1',
                   bar_code: PRODUCT_SELECTED.bar_code,
                   discount_amount: null,

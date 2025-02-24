@@ -15,7 +15,6 @@ import { STATES } from '../../../../utils/constants';
 import {
   formatCEP,
   formatCPF,
-  formatDateDOMString,
   formatDateForInput,
   formatPhone,
   formatRG,
@@ -172,7 +171,6 @@ export function ModalClient({
                 <Typography.Text>RG</Typography.Text>
 
                 <Input
-                  aria-label={values.rg || 'rg'}
                   onChange={({ target }) =>
                     setFieldValue('rg', formatRG(target.value))
                   }
@@ -190,13 +188,10 @@ export function ModalClient({
                 <Typography.Text>Data de nascimento</Typography.Text>
 
                 <Input
-                  aria-label={String(values.birthDate) || 'birthDate'}
                   onChange={({ target }) =>
                     setFieldValue('birthDate', target.value)
                   }
-                  value={formatDateDOMString(
-                    values.birthDate ? String(values.birthDate) : '',
-                  )}
+                  value={values.birthDate as any}
                   type="date"
                 />
 
