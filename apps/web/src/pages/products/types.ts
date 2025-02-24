@@ -29,8 +29,8 @@ export type ProductResponseType = {
   };
   sku?: string;
   type?: string;
-  cost_price: string;
-  sale_price: string;
+  cost_price: string | number;
+  sale_price: string | number;
   manufacturer?: string;
   productCategory?: {
     name: string;
