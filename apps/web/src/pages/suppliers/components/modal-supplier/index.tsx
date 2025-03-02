@@ -95,6 +95,7 @@ export function ModalSupplier({
     >
       {({ handleSubmit, values, errors, setFieldValue }) => (
         <Modal
+          width="90%"
           open={isVisibleModalAddSupplier}
           onCancel={handleClose}
           cancelText="Cancelar"

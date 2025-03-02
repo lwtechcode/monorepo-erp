@@ -75,6 +75,7 @@ export function ModalBillToPay({
     >
       {({ handleSubmit, values, errors, setFieldValue, validateField }) => (
         <Modal
+          width="90%"
           open={isVisibleModalBillToPay}
           onCancel={handleClose}
           cancelText="Cancelar"
@@ -85,7 +86,9 @@ export function ModalBillToPay({
           }}
         >
           <Flex vertical>
-            <Typography.Text>Formulário de contas a pagar</Typography.Text>
+            <Typography.Title level={4}>
+              Formulário de contas a pagar
+            </Typography.Title>
 
             {!isUpdate ? (
               <Typography.Text type="secondary">

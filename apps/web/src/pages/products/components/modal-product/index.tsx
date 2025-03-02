@@ -96,6 +96,7 @@ export function ModalProduct({
     >
       {({ handleSubmit, values, errors, setFieldValue }) => (
         <Modal
+          width="90%"
           open={isVisibleModalAddProduct}
           onCancel={handleClose}
           cancelText="Cancelar"

@@ -65,6 +65,7 @@ export function ModalAddProductCategory({
     >
       {({ handleSubmit, values, errors, setFieldValue }) => (
         <Modal
+          width="90%"
           open={isVisibleModalAddProductCategory}
           onCancel={handleClose}
           onOk={() => handleSubmit()}
@@ -73,7 +74,9 @@ export function ModalAddProductCategory({
             <Skeleton />
           ) : (
             <Flex vertical>
-              <Typography.Text>Formulário de categoria</Typography.Text>
+              <Typography.Title level={4}>
+                Formulário de categoria
+              </Typography.Title>
 
               {!isUpdate ? (
                 <Typography.Text type="secondary">
