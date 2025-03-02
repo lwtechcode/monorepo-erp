@@ -12,8 +12,7 @@
     "seed": "ts-node prisma/seeds.ts",
     "migrate:create": "prisma migrate dev --create-only",
     "migrate:deploy": "npx prisma migrate deploy",
-    "migrate:generate": "npx prisma generate",
-    "preinstall": "rm -rf dist"
+    "migrate:generate": "npx prisma generate"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
