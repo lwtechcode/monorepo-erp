@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "tsc && vite build --outDir ./dist"
+    "build": "tsc && vite build --outDir ./dist",
+    "preinstall": "rm -rf dist"
   },
   "dependencies": {
     "@ant-ui/react": "*",

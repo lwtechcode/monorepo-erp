@@ -63,6 +63,7 @@ export function ModalPaymentMethod({
     >
       {({ handleSubmit, values, errors, setFieldValue }) => (
         <Modal
+          width="90%"
           open={isVisibleModalAddPaymentMethod}
           onCancel={handleClose}
           onOk={() => handleSubmit()}
@@ -71,9 +72,9 @@ export function ModalPaymentMethod({
             <Skeleton />
           ) : (
             <Flex vertical>
-              <Typography.Text>
+              <Typography.Title level={4}>
                 Formulário de método de pagamento
-              </Typography.Text>
+              </Typography.Title>
 
               {!isUpdate ? (
                 <Typography.Text type="secondary">

@@ -111,6 +111,7 @@ export function ModalClient({
     >
       {({ handleSubmit, values, errors, setFieldValue }) => (
         <Modal
+          width="90%"
           open={isVisibleModalAddClient}
           onCancel={handleClose}
           cancelText="Cancelar"
@@ -121,7 +122,9 @@ export function ModalClient({
           }}
         >
           <Flex vertical>
-            <h2>Formulário de clientes</h2>
+            <Typography.Title level={4}>
+              Formulário de clientes
+            </Typography.Title>
 
             {!isUpdateClient ? (
               <Typography.Text type="secondary">
