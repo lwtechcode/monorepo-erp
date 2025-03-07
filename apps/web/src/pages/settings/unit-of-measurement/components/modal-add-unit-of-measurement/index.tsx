@@ -73,7 +73,9 @@ export function ModalAddUnitOfMeasurement({
             <Skeleton />
           ) : (
             <Flex vertical>
-              <Typography.Text>Formulário de unidade de medida</Typography.Text>
+              <Typography.Title level={4}>
+                Formulário de unidade de medida
+              </Typography.Title>
 
               {!isUpdate ? (
                 <Typography.Text type="secondary">

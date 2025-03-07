@@ -77,6 +77,7 @@ export function ModalBillToReceive({
     >
       {({ handleSubmit, values, errors, setFieldValue }) => (
         <Modal
+          width="90%"
           open={isVisibleModalBillToReceive}
           onCancel={handleClose}
           cancelText="Cancelar"
@@ -89,7 +90,9 @@ export function ModalBillToReceive({
           }
         >
           <Flex vertical>
-            <Typography.Text>Formulário de contas a receber</Typography.Text>
+            <Typography.Title level={4}>
+              Formulário de contas a receber
+            </Typography.Title>
 
             {isUpdate ? (
               <Typography.Text type="secondary">
