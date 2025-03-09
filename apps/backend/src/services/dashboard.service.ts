@@ -277,6 +277,20 @@ export async function getSalesLast7Days(companyId: string) {
   }
 }
 
+export async function getOverdueAccountsPayable(companyId: string) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  return await prisma.billToPay.findMany({
+    where: {
+      company_id: companyId,
+      due_date: {
+        lt: today,
+      },
+    },
+  });
+}
+
 export default {
   getMonthlyRevenue,
   getTopSellingProducts,
@@ -284,4 +298,5 @@ export default {
   getTopClients,
   getTopSellingCategories,
   getSalesLast7Days,
+  getOverdueAccountsPayable,
 };
