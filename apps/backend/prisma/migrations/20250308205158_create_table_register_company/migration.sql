@@ -34,13 +34,13 @@ DROP COLUMN "description",
 DROP COLUMN "updated_at",
 ADD COLUMN     "name" TEXT NOT NULL,
 DROP COLUMN "id",
-ADD COLUMN     "id" SERIAL NOT NULL,
+ADD COLUMN     "id" TEXT NOT NULL,
 ADD CONSTRAINT "permissions_pkey" PRIMARY KEY ("id");
 
 -- CreateTable
 CREATE TABLE "user_permissions" (
     "userId" TEXT NOT NULL,
-    "permissionId" INTEGER NOT NULL,
+    "permissionId" TEXT NOT NULL,
 
     CONSTRAINT "user_permissions_pkey" PRIMARY KEY ("userId","permissionId")
 );

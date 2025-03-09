@@ -8,56 +8,58 @@ datasource db {
 }
 
 model Company {
-  id                String              @id @default(cuid())
-  name              String
-  active            Boolean             @default(true)
-  cnpj              String?             @unique
-  phone             String?             @unique
-  email             String?             @unique
-  street            String?
-  number            String?
-  complement        String?
-  neighborhood      String?
-  city              String?
-  state             String?
-  zipCode           String?
-  created_at        DateTime            @default(now())
-  updated_at        DateTime?           @updatedAt
-  User              User[]
-  Client            Client[]
-  Supplier          Supplier[]
-  PaymentMethod     PaymentMethod[]
-  ProductCategory   ProductCategory[]
-  BillToPay         BillToPay[]
-  Product           Product[]
-  UnitOfMeasurement UnitOfMeasurement[]
-  BillToReceive     BillToReceive[]
-  Sale              Sale[]
-  ProductSale       ProductSale[]
-  SalesBudget       SalesBudget[]
-  ProductSaleBudget ProductSaleBudget[]
+  id                        String              @id @default(cuid())
+  name                      String
+  active                    Boolean             @default(true)
+  cnpj                      String?             @unique
+  phone                     String?             @unique
+  email                     String?             @unique
+  street                    String?
+  number                    String?
+  complement                String?
+  neighborhood              String?
+  city                      String?
+  state                     String?
+  zipCode                   String?
+  code_register_validation  String?
+  validate_code_register_at DateTime?
+  created_at                DateTime            @default(now())
+  updated_at                DateTime?           @updatedAt
+  User                      User[]
+  Client                    Client[]
+  Supplier                  Supplier[]
+  PaymentMethod             PaymentMethod[]
+  ProductCategory           ProductCategory[]
+  BillToPay                 BillToPay[]
+  Product                   Product[]
+  UnitOfMeasurement         UnitOfMeasurement[]
+  BillToReceive             BillToReceive[]
+  Sale                      Sale[]
+  ProductSale               ProductSale[]
+  SalesBudget               SalesBudget[]
+  ProductSaleBudget         ProductSaleBudget[]
 
   @@map("companies")
 }
 
 model User {
-  id             String           @id @default(cuid())
-  name           String
-  email          String           @unique
-  phone          String?
-  password       String
-  active         Boolean          @default(true)
-  company        Company          @relation(fields: [company_id], references: [id])
-  company_id     String
-  created_at     DateTime         @default(now())
-  updated_at     DateTime?        @updatedAt
-  UserPermission UserPermission[]
+  id          String           @id @default(cuid())
+  name        String
+  email       String           @unique
+  phone       String?
+  password    String
+  active      Boolean          @default(true)
+  company     Company          @relation(fields: [company_id], references: [id])
+  company_id  String
+  created_at  DateTime         @default(now())
+  updated_at  DateTime?        @updatedAt
+  permissions UserPermission[]
 
   @@map("users")
 }
 
 model Permission {
-  id             Int              @id @default(autoincrement())
+  id             String           @id @default(cuid())
   name           String           @unique
   UserPermission UserPermission[]
 
@@ -66,7 +68,7 @@ model Permission {
 
 model UserPermission {
   userId       String
-  permissionId Int
+  permissionId String
 
   user       User       @relation(fields: [userId], references: [id])
   permission Permission @relation(fields: [permissionId], references: [id])
