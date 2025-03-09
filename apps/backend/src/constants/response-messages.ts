@@ -10,6 +10,9 @@ export enum RESPONSE_MESSAGE {
   ERROR_DELETING = 'Erro ao excluir o registro',
   INVALID_DATA = 'Dados inválidos para a operação',
   EMAIL_EXISTS = 'E-mail não está disponível para novo cadastro',
+  EMAIL_USER_ADMIN_EXISTS = 'E-mail do usuário admin não está disponível para cadastro',
+  CNPJ_EXISTS = 'CNPJ não está disponível para novo cadastro',
+  PHONE_EXISTS = 'Telefone não está disponível para novo cadastro',
   INVALID_LOGIN_DATA = 'E-mail e/ou senha inválidos',
   OPERATION_FAILED = 'Falha na operação',
   UNAUTHORIZED_USER = 'Usuário não autorizado',
@@ -17,4 +20,8 @@ export enum RESPONSE_MESSAGE {
   RESET_PASSWORD_EMAIL_SENT = 'Se o e-mail fornecido estiver registrado em nossa base de dados, você receberá um link para redefinição de senha por ele.',
   PROVIDE_RECORD_ID = 'Informe o id do registro.',
   USER_NOT_FOUND = 'Usuário inválido no sistema.',
+  ROLE_NOT_FOUND = 'Permissão de Adminstrador não encontrada na base de dados.',
+  INVALID_CODE = 'Código de validação inválido.',
+  COMPANY_VALIDATED = 'Empresa validada com sucesso.',
+  COMPANY_NOT_VALIDATED = 'Empresa não validada.',
 }
