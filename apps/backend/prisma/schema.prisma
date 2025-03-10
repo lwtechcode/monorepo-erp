@@ -8,41 +8,73 @@ datasource db {
 }
 
 model Company {
-  id                String              @id @default(cuid())
-  name              String
-  active            Boolean             @default(true)
-  created_at        DateTime            @default(now())
-  updated_at        DateTime?           @updatedAt
-  User              User[]
-  Client            Client[]
-  Supplier          Supplier[]
-  PaymentMethod     PaymentMethod[]
-  ProductCategory   ProductCategory[]
-  BillToPay         BillToPay[]
-  Product           Product[]
-  UnitOfMeasurement UnitOfMeasurement[]
-  BillToReceive     BillToReceive[]
-  Sale              Sale[]
-  ProductSale       ProductSale[]
-  SalesBudget       SalesBudget[]
-  ProductSaleBudget ProductSaleBudget[]
+  id                        String              @id @default(cuid())
+  name                      String
+  active                    Boolean             @default(true)
+  cnpj                      String?             @unique
+  phone                     String?             @unique
+  email                     String?             @unique
+  street                    String?
+  number                    String?
+  complement                String?
+  neighborhood              String?
+  city                      String?
+  state                     String?
+  zipCode                   String?
+  code_register_validation  String?
+  validate_code_register_at DateTime?
+  created_at                DateTime            @default(now())
+  updated_at                DateTime?           @updatedAt
+  User                      User[]
+  Client                    Client[]
+  Supplier                  Supplier[]
+  PaymentMethod             PaymentMethod[]
+  ProductCategory           ProductCategory[]
+  BillToPay                 BillToPay[]
+  Product                   Product[]
+  UnitOfMeasurement         UnitOfMeasurement[]
+  BillToReceive             BillToReceive[]
+  Sale                      Sale[]
+  ProductSale               ProductSale[]
+  SalesBudget               SalesBudget[]
+  ProductSaleBudget         ProductSaleBudget[]
 
   @@map("companies")
 }
 
 model User {
-  id         String    @id @default(cuid())
-  name       String
-  email      String    @unique
-  phone      String?
-  password   String
-  active     Boolean   @default(true)
-  company    Company   @relation(fields: [company_id], references: [id])
-  company_id String
-  created_at DateTime  @default(now())
-  updated_at DateTime? @updatedAt
+  id          String           @id @default(cuid())
+  name        String
+  email       String           @unique
+  phone       String?
+  password    String
+  active      Boolean          @default(true)
+  company     Company          @relation(fields: [company_id], references: [id])
+  company_id  String
+  created_at  DateTime         @default(now())
+  updated_at  DateTime?        @updatedAt
+  permissions UserPermission[]
 
   @@map("users")
+}
+
+model Permission {
+  id             String           @id @default(cuid())
+  name           String           @unique
+  UserPermission UserPermission[]
+
+  @@map("permissions")
+}
+
+model UserPermission {
+  userId       String
+  permissionId String
+
+  user       User       @relation(fields: [userId], references: [id])
+  permission Permission @relation(fields: [permissionId], references: [id])
+
+  @@id([userId, permissionId])
+  @@map("user_permissions")
 }
 
 model Client {
@@ -164,11 +196,6 @@ model BillToReceive {
   created_at   DateTime  @default(now())
   updated_at   DateTime? @updatedAt
 
-  // added_value            Decimal?  @default(0) @db.Decimal(9, 2)
-  // recurrence             Boolean?
-  // number_of_installments Int?
-  // installment            Int?
-
   @@map("bills_to_receive")
 }
 
@@ -202,16 +229,6 @@ model Product {
   ProductSaleBudget   ProductSaleBudget[]
 
   @@map("products")
-}
-
-model Permission {
-  id          String    @id @default(cuid())
-  description String
-  code        Int
-  created_at  DateTime  @default(now())
-  updated_at  DateTime? @updatedAt
-
-  @@map("permissions")
 }
 
 model UnitOfMeasurement {
@@ -273,21 +290,21 @@ model ProductSale {
 }
 
 model SalesBudget {
-  id                String              @id @default(cuid())
-  total_value       Decimal             @default(0) @db.Decimal(19, 2)
-  discount_value    Decimal             @default(0) @db.Decimal(19, 2)
-  increase_value    Decimal             @default(0) @db.Decimal(19, 2)
-  tax_payment_value Decimal             @default(0) @db.Decimal(19, 2)
-  client            Client?             @relation(fields: [client_id], references: [id])
+  id                String        @id @default(cuid())
+  total_value       Decimal       @default(0) @db.Decimal(19, 2)
+  discount_value    Decimal       @default(0) @db.Decimal(19, 2)
+  increase_value    Decimal       @default(0) @db.Decimal(19, 2)
+  tax_payment_value Decimal       @default(0) @db.Decimal(19, 2)
+  client            Client?       @relation(fields: [client_id], references: [id])
   client_id         String?
-  payment           PaymentMethod       @relation(fields: [payment_method_id], references: [id])
+  payment           PaymentMethod @relation(fields: [payment_method_id], references: [id])
   payment_method_id String
   observation       String?
-  company           Company             @relation(fields: [company_id], references: [id])
+  company           Company       @relation(fields: [company_id], references: [id])
   company_id        String
-  created_at        DateTime            @default(now())
-  updated_at        DateTime?           @updatedAt
-  active            Boolean             @default(true)
+  created_at        DateTime      @default(now())
+  updated_at        DateTime?     @updatedAt
+  active            Boolean       @default(true)
 
   ProductSale       ProductSale[]
   ProductSaleBudget ProductSaleBudget[]

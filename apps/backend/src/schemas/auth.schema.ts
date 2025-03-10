@@ -5,21 +5,29 @@ export const loginSchema = z.object({
   password: z.string(),
 });
 
-export const registerSchema = z.object({
-  name: z.string().min(1),
-  phone: z.string().min(1),
+const companySchema = z.object({
+  name: z.string(),
+  cnpj: z.string(),
+  phone: z.string(),
   email: z.string().email(),
-  password: z.string().min(3),
-  company_name: z.string().min(1),
-  cnpj: z
-    .string()
-    .optional()
-    .refine(
-      (value) => {
-        return !value || /^\d{14}$/.test(value);
-      },
-      {
-        message: 'O CNPJ deve conter exatamente 14 dígitos.',
-      },
-    ),
+  street: z.string(),
+  number: z.string(),
+  complement: z.string(),
+  neighborhood: z.string(),
+  city: z.string(),
+  state: z.string(),
+  zipCode: z.string(),
 });
+
+const adminUserSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+  password: z.string(),
+});
+
+export const createCompanyDataSchema = z.object({
+  company: companySchema,
+  adminUser: adminUserSchema,
+});
+
+export type CreateCompanyData = z.infer<typeof createCompanyDataSchema>;
