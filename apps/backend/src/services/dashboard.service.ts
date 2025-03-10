@@ -1,5 +1,6 @@
-import { subMonths, format } from 'date-fns';
+import { format, subMonths } from 'date-fns';
 import { prisma } from '../database/prisma';
+import { formatDate } from '../utils/formatters';
 
 export const getMonthlyRevenue = async (companyId: string) => {
   const now = new Date();
@@ -25,9 +26,9 @@ export const getMonthlyRevenue = async (companyId: string) => {
   const monthlyRevenue: { month: string; revenue: number }[] = [];
 
   for (let i = 11; i >= 0; i--) {
-    const month = format(subMonths(now, i), 'yyyy-MM');
+    const month = format(subMonths(now, i), 'MM/yyyy');
     const revenue =
-      sales.find((sale) => format(sale.created_at, 'yyyy-MM') === month)?._sum
+      sales.find((sale) => format(sale.created_at, 'MM/yyyy') === month)?._sum
         .total_value || 0;
 
     monthlyRevenue.push({ month, revenue: Number(revenue) });
@@ -63,7 +64,7 @@ export const getTopSellingProducts = async (company_id: string) => {
       return {
         id: productDetails?.id,
         name: productDetails?.name,
-        totalSold: product._sum.qty,
+        total_sold: Number(product._sum.qty),
       };
     }),
   );
@@ -108,9 +109,8 @@ export const getPaymentMethodPercentage = async (companyId: string) => {
       (pm) => pm.id === sale.payment_method_id,
     );
     return {
-      paymentMethod: paymentMethod ? paymentMethod.name : 'Desconhecido',
-      percentage:
-        ((sale._count.payment_method_id / totalSales) * 100).toFixed(2) + '%',
+      payment_method: paymentMethod ? paymentMethod.name : 'Desconhecido',
+      percentage: (sale._count.payment_method_id / totalSales) * 100,
     };
   });
 };
@@ -214,10 +214,10 @@ export async function getTopSellingCategories(
         totalSalesValue > 0 ? (categorySalesValue / totalSalesValue) * 100 : 0;
 
       return {
-        categoryId: category.id,
-        categoryName: category.name,
-        totalSalesValue: categorySalesValue,
-        salesPercentage: salesPercentage,
+        category_id: category.id,
+        category_name: category.name,
+        total_sales_value: categorySalesValue,
+        sales_percentage: salesPercentage,
       };
     });
 
@@ -265,8 +265,8 @@ export async function getSalesLast7Days(companyId: string) {
         (sale) => sale.created_at.toISOString().split('T')[0] === date,
       );
       return {
-        dataDoDia: date,
-        ValorVendido: sale ? sale._sum.total_value?.toNumber() || 0 : 0,
+        date_day: formatDate(new Date(date)),
+        value_sale: sale ? sale._sum.total_value?.toNumber() || 0 : 0,
       };
     });
 
