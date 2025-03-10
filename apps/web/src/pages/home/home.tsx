@@ -15,7 +15,7 @@ import BarChartHorizotal, {
   mountDataBarHorizontalChartTopClients,
   mountDataBarHorizontalChartTopSellingCategories,
 } from './components/BarChart/BarChart';
-import { useGetChartsDashboard } from './hooks';
+import { useGetChartsDashboard, useGetNotificationsDashboard } from './hooks';
 
 export default function Home() {
   const { useBreakpoint } = Grid.Root;
@@ -25,6 +25,8 @@ export default function Home() {
   const { chartsDashboard, isFetchingChartsDashboard } =
     useGetChartsDashboard();
 
+  const { isFetchingNotificationsDashboard } = useGetNotificationsDashboard();
+
   const isEmptyCharts =
     Boolean(chartsDashboard?.paymentMethodPercentage) &&
     Boolean(chartsDashboard?.salesLastSevenDays) &&
@@ -33,9 +35,12 @@ export default function Home() {
     Boolean(chartsDashboard?.topProductsSelling) &&
     Boolean(chartsDashboard?.topSellingCategories);
 
+  const isLoading =
+    isFetchingChartsDashboard || isFetchingNotificationsDashboard;
+
   return (
     <Flex vertical align="center" justify="center" className="px-4 py-4 h-full">
-      {isFetchingChartsDashboard ? (
+      {isLoading ? (
         <WrapperLoading />
       ) : (
         <Grid.Row

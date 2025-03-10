@@ -7,6 +7,27 @@ export type ResponseChartsDashboardTypes = {
   salesLastSevenDays: SalesLastSevenDayTypes[];
 };
 
+export type ResponseNotificationsDashboardTypes = {
+  overdueAccountsPayable: Array<{
+    id: string;
+    description: string;
+    due_date: string;
+    pay_date: string | null;
+    value: string;
+    added_value: string;
+    status: number;
+    creditor: string;
+    recurrence: string | null;
+    number_of_installments: string | null;
+    installment: string | null;
+    observation: string;
+    company_id: string;
+    created_at: string;
+    updated_at: string;
+  }>;
+  dueTodayAccountsPayable: Array<any>;
+};
+
 export type SalesPerMonthTypes = {
   month: string;
   revenue: number;

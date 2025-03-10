@@ -22,3 +22,15 @@ export async function getChartsDashboard() {
     throw new Error(await exctractErrorMessage(error));
   }
 }
+
+export async function getNotificationsDashboard() {
+  try {
+    const response = await requestApi.get<ResponseChartsDashboardTypes>(
+      `/dashboard/notifications`,
+    );
+
+    return response?.data;
+  } catch (error: any) {
+    throw new Error(await exctractErrorMessage(error));
+  }
+}

@@ -12,6 +12,26 @@ export function ProviderReactQuery({ children }: PropsWithChildren) {
 
   const queryCache = new QueryCache({
     onSuccess: (data: any) => {
+      if (data.overdueAccountsPayable) {
+        data?.overdueAccountsPayable?.map(({ description }: any) => {
+          notification.info({
+            message: 'Alerta',
+            description: description,
+            duration: 0,
+          });
+        });
+      }
+
+      if (data.dueTodayAccountsPayable) {
+        data?.dueTodayAccountsPayable?.map(({ description }: any) => {
+          notification.info({
+            message: 'Alerta',
+            description: description,
+            duration: 0,
+          });
+        });
+      }
+
       data.message ? notification.success({ message: data.message }) : null;
     },
     onError: (error) => {
