@@ -1,6 +1,8 @@
-import { Button, Menu, Space, Typography } from '@ant-ui/react';
-import { Radio, TableColumnsType } from 'antd';
+import { Button, Flex, Icon, Menu, Space, Typography } from '@ant-ui/react';
+import { Radio, TableColumnsType, Tooltip } from 'antd';
 import { Dispatch, SetStateAction, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { RoutesEnum } from '../../../enums';
 import {
   formatCPF,
   formatDateWithHours,
@@ -76,6 +78,8 @@ export function useDataTable({
   sales,
   handleFilterSalesMade,
 }: DataTableClientTypes) {
+  const navigate = useNavigate();
+
   const columns: TableColumnsType<SaleBudgetsProductType> = [
     {
       key: 'name',
@@ -141,6 +145,27 @@ export function useDataTable({
       title: 'Total',
       dataIndex: 'total_value',
       ellipsis: true,
+    },
+    {
+      title: 'Ações',
+      dataIndex: '',
+      key: 'x',
+      align: 'center',
+      render: (_, record) => (
+        <Flex align="center" justify="center">
+          <Tooltip title="Finalizar venda">
+            <Button
+              type="text"
+              onClick={() => {
+                navigate(RoutesEnum.Sales);
+              }}
+            >
+              <Icon component="DollarTwoTone" />
+            </Button>
+          </Tooltip>
+        </Flex>
+      ),
+      width: '20%',
     },
   ];
 

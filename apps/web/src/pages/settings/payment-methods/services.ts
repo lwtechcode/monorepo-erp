@@ -50,7 +50,7 @@ export async function getAllPaymentMethodsOptions() {
 
 export const initialValues = {
   name: '',
-  tax: '',
+  tax: 0,
   observation: '',
   active: false,
 };

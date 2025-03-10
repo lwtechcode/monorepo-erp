@@ -68,7 +68,7 @@ export default function PaymentMethods() {
         observation: productCategory.observation,
         active: productCategory?.active,
         id: productCategory?.id,
-        tax: productCategory.tax,
+        tax: Number(productCategory.tax),
       },
     });
 

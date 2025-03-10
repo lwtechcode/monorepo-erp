@@ -1,6 +1,6 @@
 import { format, subMonths } from 'date-fns';
 import { prisma } from '../database/prisma';
-import { formatDate } from '../utils/formatters';
+import { formatDate, formatMoney } from '../utils/formatters';
 
 export const getMonthlyRevenue = async (companyId: string) => {
   const now = new Date();
@@ -281,7 +281,7 @@ export async function getOverdueAccountsPayable(companyId: string) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  return await prisma.billToPay.findMany({
+  const notifyAccountsPayable = await prisma.billToPay.findMany({
     where: {
       company_id: companyId,
       due_date: {
@@ -289,6 +289,15 @@ export async function getOverdueAccountsPayable(companyId: string) {
       },
     },
   });
+
+  return notifyAccountsPayable?.map(
+    ({ description, due_date, value, status }) => ({
+      description: description,
+      due_date: formatDate(due_date),
+      value: formatMoney(Number(value)),
+      status,
+    }),
+  );
 }
 
 export async function getDueTodayAccountsPayable(companyId: string) {
@@ -298,7 +307,7 @@ export async function getDueTodayAccountsPayable(companyId: string) {
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
-  return await prisma.billToPay.findMany({
+  const notifyTodayAccountsPayable = await prisma.billToPay.findMany({
     where: {
       company_id: companyId,
       due_date: {
@@ -307,6 +316,15 @@ export async function getDueTodayAccountsPayable(companyId: string) {
       },
     },
   });
+
+  return notifyTodayAccountsPayable?.map(
+    ({ description, due_date, value, status }) => ({
+      description: description,
+      due_date: formatDate(due_date),
+      value: formatMoney(Number(value)),
+      status,
+    }),
+  );
 }
 
 export default {

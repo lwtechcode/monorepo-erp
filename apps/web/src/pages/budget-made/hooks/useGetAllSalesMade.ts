@@ -16,8 +16,10 @@ export function useGetAllSalesMade({
   selectedPage,
 }: SalesMadeProps) {
   const {
+    isLoading,
+    isFetching,
+    isRefetching,
     data: salesMade,
-    isPending: isFetchingSalesMade,
     refetch: refetchSalesMade,
   } = useQuery({
     queryKey: [
@@ -40,7 +42,7 @@ export function useGetAllSalesMade({
 
   return {
     salesMade,
-    isFetchingSalesMade,
+    isFetchingSalesMade: isRefetching || isFetching || isLoading,
     refetchSalesMade,
   };
 }
