@@ -157,7 +157,12 @@ export function useDataTable({
             <Button
               type="text"
               onClick={() => {
-                navigate(RoutesEnum.Sales);
+                navigate(RoutesEnum.Sales, {
+                  state: {
+                    isBudget: true,
+                    idBudget: record.id,
+                  },
+                });
               }}
             >
               <Icon component="DollarTwoTone" />

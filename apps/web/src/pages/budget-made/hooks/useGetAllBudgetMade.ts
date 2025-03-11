@@ -4,17 +4,17 @@ import { FilterSaleBudgetsType } from '../types';
 
 const QUERY_KEY_SALES_MADE = 'vendas-realizadas';
 
-type SalesMadeProps = {
+type BudgetMadeProps = {
   filterSales: FilterSaleBudgetsType;
   debounceSearchTerm: string;
   selectedPage: number;
 };
 
-export function useGetAllSalesMade({
+export function useGetAllBudgetMade({
   debounceSearchTerm,
   filterSales,
   selectedPage,
-}: SalesMadeProps) {
+}: BudgetMadeProps) {
   const {
     isLoading,
     isFetching,

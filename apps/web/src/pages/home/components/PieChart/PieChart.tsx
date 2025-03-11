@@ -26,12 +26,12 @@ export function mountDataPieChartPaymentMethodPercentage(
     series: [
       {
         data: data?.map(({ percentage, payment_method }) => ({
-          value: percentage,
+          value: Number(percentage.toFixed(2)),
           label: payment_method,
         })),
         innerRadius: 60,
         arcLabel: (item) => `${item.value}%`,
-        valueFormatter: ({ value }) => String(value).concat('%') || '0.0%',
+        valueFormatter: ({ value }) => value.toFixed(2).concat('%') || '0.0%',
       },
     ],
   };
