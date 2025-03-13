@@ -129,7 +129,7 @@ export function ModalProduct({
                   aria-label={values.name || 'Name'}
                   value={values.name as string}
                   onChange={({ target }) => setFieldValue('name', target.value)}
-                  placeholder="Informe o nome do cliente"
+                  placeholder="Informe o nome do produto"
                 />
 
                 {errors.name ? (

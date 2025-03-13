@@ -8,6 +8,7 @@ const auth_controller_1 = __importDefault(require("../controllers/auth.controlle
 const request_validator_1 = require("../middlewares/request-validator");
 const auth_schema_1 = require("../schemas/auth.schema");
 const authRoutes = (0, express_1.Router)();
+authRoutes.get('/validate-registration/:code', auth_controller_1.default.validateCompany);
 authRoutes.post('/login', (0, request_validator_1.requestBodyValidation)(auth_schema_1.loginSchema), auth_controller_1.default.login);
-authRoutes.post('/register', (0, request_validator_1.requestBodyValidation)(auth_schema_1.registerSchema), auth_controller_1.default.register);
+authRoutes.post('/register', (0, request_validator_1.requestBodyValidation)(auth_schema_1.createCompanyDataSchema), auth_controller_1.default.registerCompany);
 exports.default = authRoutes;

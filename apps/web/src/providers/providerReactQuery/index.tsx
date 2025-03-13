@@ -1,4 +1,4 @@
-import { useApp } from '@ant-ui/react';
+import { Flex, Typography, useApp } from '@ant-ui/react';
 import {
   MutationCache,
   QueryCache,
@@ -6,12 +6,33 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query';
 import { PropsWithChildren } from 'react';
+import { renderStatus } from '../../utils/functions';
 
 export function ProviderReactQuery({ children }: PropsWithChildren) {
   const { notification } = useApp();
 
   const queryCache = new QueryCache({
     onSuccess: (data: any) => {
+      data?.notifications
+        ? data?.notifications?.map(
+            ({ description, due_date, status, value }: any) => {
+              notification.info({
+                message: description,
+                description: (
+                  <Flex gap={12} vertical>
+                    <Typography.Text>Valor à pagar: {value}</Typography.Text>
+                    <Typography.Text>
+                      Data do vencimento: {due_date}
+                    </Typography.Text>
+                    {renderStatus(status)}
+                  </Flex>
+                ),
+                duration: 0,
+              });
+            },
+          )
+        : null;
+
       data.message ? notification.success({ message: data.message }) : null;
     },
     onError: (error) => {
