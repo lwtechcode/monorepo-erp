@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import {
+  getDueTodayAccountsPayable,
   getMonthlyRevenue,
+  getOverdueAccountsPayable,
   getPaymentMethodPercentage,
+  getSalesLast7Days,
   getTopClients,
   getTopSellingCategories,
   getTopSellingProducts,
-  getSalesLast7Days,
-  getOverdueAccountsPayable,
-  getDueTodayAccountsPayable,
 } from '../services/dashboard.service';
 
 export async function dashboard(request: Request, response: Response) {
@@ -46,8 +46,7 @@ export async function notifications(request: Request, response: Response) {
       await getDueTodayAccountsPayable(company_id);
 
     return response.json({
-      overdueAccountsPayable,
-      dueTodayAccountsPayable,
+      notifications: [...overdueAccountsPayable, ...dueTodayAccountsPayable],
     });
   } catch (error) {
     response.status(500).json({ error: 'Internal Server Error' });

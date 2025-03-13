@@ -121,3 +121,12 @@ export const STATUS_CLIENT = [
   { label: 'Ativo', key: 'ativo' },
   { label: 'Inativo', key: 'inativo' },
 ];
+
+export const COLORS_CHARTS = [
+  '#B3D9F2', // Azul mais claro
+  '#90CAF9', // Azul claro
+  '#42A5F5', // Azul padrão
+  '#1E88E5', // Azul intermediário
+  '#1565C0', // Azul escuro
+  '#0D47A1', // Azul mais escuro
+];

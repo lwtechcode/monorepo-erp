@@ -1,6 +1,6 @@
 import { requestApi } from '../../services/api';
 import { exctractErrorMessage } from '../../services/error';
-import { ResponseSalesType } from './types';
+import { BudgetIdMadeResponseTypes, ResponseSalesType } from './types';
 
 export async function getSaleBudgetsMade({
   status,
@@ -25,6 +25,18 @@ export async function getSaleBudgetsMade({
         status,
       },
     });
+
+    return response?.data;
+  } catch (error: any) {
+    throw new Error(await exctractErrorMessage(error));
+  }
+}
+
+export async function getSaleIdBudgetMade({ id }: { id?: string }) {
+  try {
+    const response = await requestApi.get<BudgetIdMadeResponseTypes>(
+      `/sale-budgets/${id}`,
+    );
 
     return response?.data;
   } catch (error: any) {

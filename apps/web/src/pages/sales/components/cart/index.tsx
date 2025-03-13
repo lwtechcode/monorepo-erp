@@ -1,4 +1,4 @@
-import { Button, Flex, Icon, Input, Table } from '@ant-ui/react';
+import { Button, Flex, Icon, Input, Table, Typography } from '@ant-ui/react';
 
 import { formatMoney } from '../../../../utils/formatters';
 import { calcTotalValue } from '../../../../utils/functions';
@@ -10,6 +10,8 @@ import { columns } from './constants';
 export function Cart({
   stateCart,
   isLoading,
+  tableParams,
+  handleTableChange,
   handleRemoveProduct,
   handleUpdateProduct,
 }: CartProps) {
@@ -97,6 +99,8 @@ export function Cart({
             ? calcTaxDiscount
             : rest.value_unit;
 
+          console.log(' Number(rest.discount_tax)', Number(rest.discount_tax));
+
           return {
             key: index,
             id: rest.id,
@@ -177,7 +181,19 @@ export function Cart({
         columns={columns}
         dataSource={data}
         loading={isLoading}
-        pagination={{ pageSize: 20 }}
+        onChange={handleTableChange}
+        pagination={{
+          ...tableParams.pagination,
+          total: stateCart?.context?.products?.totalCount,
+          showTotal: (total) => (
+            <Flex gap={4}>
+              <Typography.Text className="font-bold">
+                Total de Registros:
+              </Typography.Text>
+              <Typography.Text>{total || 0}</Typography.Text>
+            </Flex>
+          ),
+        }}
         bordered
       />
     </div>

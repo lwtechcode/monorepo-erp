@@ -49,7 +49,7 @@ export function ModalPaymentMethod({
           name: data.name,
           observation: data.observation,
           active: data.active,
-          tax: data.tax,
+          tax: Number(data.tax),
         };
 
         isUpdate && form.id
@@ -110,8 +110,7 @@ export function ModalPaymentMethod({
                   <Typography.Text>Taxa</Typography.Text>
 
                   <Input
-                    aria-label={values.tax || 'Tax'}
-                    value={values.tax as string}
+                    value={values.tax as any}
                     onChange={({ target }) =>
                       setFieldValue('tax', target.value)
                     }

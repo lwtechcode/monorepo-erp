@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@ant-ui/react';
 import useDebounce from '../../hooks/useDebounce';
+import { SortOrderType } from '../../utils/types';
 import { useDataTable, useGetAllSalesMade } from './hooks';
 import { FilterSalesType } from './types';
 
@@ -39,8 +40,6 @@ export default function SalesMadePage() {
 
   const isLoading = isFetchingSalesMade;
 
-  const isEmptyList = Boolean(salesMade?.sales?.length);
-
   function handleFilterApply() {
     return Boolean(filterSales.status);
   }
@@ -58,6 +57,44 @@ export default function SalesMadePage() {
 
   function handleClearFilters() {
     setFilterSales({ textFilterByNameAndCpf: '', status: '', ordered: '' });
+  }
+
+  function handleTableChange(pagination: any, filters: any, sorter: any) {
+    const orderCreatedDate: { [key in SortOrderType]?: () => void } = {
+      // ascend: () => handleOrderedList('createdAt'),
+      descend: () => handleClearFilters(),
+    };
+
+    const orderName: { [key in SortOrderType]?: () => void } = {
+      // ascend: () => handleOrderedList('name'),
+      descend: () => handleClearFilters(),
+    };
+
+    if (sorter.columnKey?.includes('createdAt')) {
+      // Checa se a ordem do sorter está definida e se existe uma função correspondente no mapeamento
+      const orderAction = orderCreatedDate[sorter.order as SortOrderType];
+
+      orderAction ? orderAction() : null; // Executa a função correspondente
+    }
+
+    if (sorter.columnKey?.includes('name')) {
+      // Checa se a ordem do sorter está definida e se existe uma função correspondente no mapeamento
+      const orderAction = orderName[sorter.order as SortOrderType];
+
+      orderAction ? orderAction() : null; // Executa a função correspondente
+    }
+
+    setTableParams({
+      pagination,
+      filters,
+      sortOrder: Array.isArray(sorter) ? undefined : sorter.order,
+      sortField: Array.isArray(sorter) ? undefined : sorter.field,
+    });
+
+    // `dataSource` is useless since `pageSize` changed
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      return [];
+    }
   }
 
   const { columns, data } = useDataTable({ sales: salesMade?.sales });
@@ -93,6 +130,7 @@ export default function SalesMadePage() {
           columns={columns as any}
           dataSource={data}
           loading={isLoading}
+          onChange={handleTableChange}
           pagination={{
             ...tableParams.pagination,
             total: salesMade?.totalCount,

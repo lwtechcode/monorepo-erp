@@ -19,7 +19,7 @@ export type FormPaymentMethod = Partial<
     observation: string;
     active?: boolean;
     id?: string;
-    tax: string;
+    tax: number;
   }>
 >;
 

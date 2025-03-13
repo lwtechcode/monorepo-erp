@@ -95,6 +95,8 @@ export function ProductsPage() {
   }
 
   function updateProductAction(product: ProductResponseType) {
+    setIsVisibleModalAddProduct(true);
+
     return setStateProduct({
       type: RequestVerbEnum.PUT,
       form: {

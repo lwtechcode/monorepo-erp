@@ -4,20 +4,22 @@ import { FilterSaleBudgetsType } from '../types';
 
 const QUERY_KEY_SALES_MADE = 'vendas-realizadas';
 
-type SalesMadeProps = {
+type BudgetMadeProps = {
   filterSales: FilterSaleBudgetsType;
   debounceSearchTerm: string;
   selectedPage: number;
 };
 
-export function useGetAllSalesMade({
+export function useGetAllBudgetMade({
   debounceSearchTerm,
   filterSales,
   selectedPage,
-}: SalesMadeProps) {
+}: BudgetMadeProps) {
   const {
+    isLoading,
+    isFetching,
+    isRefetching,
     data: salesMade,
-    isPending: isFetchingSalesMade,
     refetch: refetchSalesMade,
   } = useQuery({
     queryKey: [
@@ -40,7 +42,7 @@ export function useGetAllSalesMade({
 
   return {
     salesMade,
-    isFetchingSalesMade,
+    isFetchingSalesMade: isRefetching || isFetching || isLoading,
     refetchSalesMade,
   };
 }
