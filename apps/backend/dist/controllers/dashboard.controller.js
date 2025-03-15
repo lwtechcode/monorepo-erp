@@ -31,8 +31,7 @@ async function notifications(request, response) {
         const overdueAccountsPayable = await (0, dashboard_service_1.getOverdueAccountsPayable)(company_id);
         const dueTodayAccountsPayable = await (0, dashboard_service_1.getDueTodayAccountsPayable)(company_id);
         return response.json({
-            overdueAccountsPayable,
-            dueTodayAccountsPayable,
+            notifications: [...overdueAccountsPayable, ...dueTodayAccountsPayable],
         });
     }
     catch (error) {
