@@ -1,6 +1,7 @@
 import { Anchor, Button, Flex, Typography } from '@ant-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { RoutesEnum } from '../../enums';
+import { isAuthenticated } from '../../services/auth';
 import { HeaderAuthProps } from './types';
 
 export function HeaderAuth({ buttonType = 'login' }: HeaderAuthProps) {
@@ -38,7 +39,11 @@ export function HeaderAuth({ buttonType = 'login' }: HeaderAuthProps) {
       justify="space-between"
     >
       <Typography.Link
-        onClick={() => navigate(RoutesEnum.Root)}
+        onClick={() => {
+          isAuthenticated()
+            ? navigate(RoutesEnum.Root)
+            : navigate(RoutesEnum.Login);
+        }}
         className="text-black"
       >
         Logo

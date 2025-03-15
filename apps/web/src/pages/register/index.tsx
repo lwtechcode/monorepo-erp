@@ -1,9 +1,12 @@
-import { Flex, Typography } from '@ant-ui/react';
+import { Loading } from '@ant-ui/react';
+import { lazy, Suspense } from 'react';
+
+const RegisterScreenLazy = lazy(() => import('./register'));
 
 export function RegisterPage() {
   return (
-    <Flex>
-      <Typography.Title level={4}>Screen Register</Typography.Title>
-    </Flex>
+    <Suspense fallback={<Loading />}>
+      <RegisterScreenLazy />
+    </Suspense>
   );
 }
