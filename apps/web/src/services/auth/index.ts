@@ -1,14 +1,9 @@
-import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 type User = {
   name: string;
-  // email: string;
-  // cnpj: string;
-  // role: string;
   token: string;
-  // confirmed_email: boolean;
-  // usage_disk: number;
 };
 
 type AuthStore = {
@@ -21,13 +16,8 @@ export const useAuthStore = create(
   persist<AuthStore>(
     (set) => ({
       user: {
-        name: "",
-        // email: "",
-        // cnpj: "",
-        // role: "",
-        token: "",
-        // confirmed_email: false,
-        // usage_disk: 0,
+        name: '',
+        token: '',
       },
       setUserAuth: (user) =>
         set((state) => ({
@@ -39,19 +29,19 @@ export const useAuthStore = create(
       clearUserAuth: () =>
         set(() => ({
           user: {
-            // cnpj: "",
-            // email: "",
-            name: "",
-            // role: "",
-            token: "",
-            // confirmed_email: false,
-            // usage_disk: 0,
+            name: '',
+            token: '',
           },
         })),
     }),
     {
-      name: "@user-auth-storage",
+      name: '@user-auth-storage',
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 );
+
+export const isAuthenticated = () => {
+  const { user } = useAuthStore.getState();
+  return Boolean(user.token);
+};
