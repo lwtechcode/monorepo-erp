@@ -1,17 +1,19 @@
 import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
 import { Request, Response } from 'express';
 import { RESPONSE_MESSAGE } from '../constants/response-messages';
 import { STATUS_CODE } from '../constants/status-code';
 import { LoginDTO, RegisterCompanyDTO } from '../dto/auth.dto';
 import authService from '../services/auth.service';
-import jtwUtils from '../utils/jtw.util';
 import { sendMail } from '../utils/email';
-import dotenv from 'dotenv';
+import jtwUtils from '../utils/jtw.util';
 
 dotenv.config();
 
 export async function login(request: Request, response: Response) {
   const backendUrl = process.env.BACKEND_HOME_PAGE;
+
+  console.warn('backendUrl:::', process.env.BACKEND_HOME_PAGE);
 
   try {
     const body: LoginDTO = request.body;

@@ -7,15 +7,16 @@ exports.login = login;
 exports.validateCompany = validateCompany;
 exports.registerCompany = registerCompany;
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const dotenv_1 = __importDefault(require("dotenv"));
 const response_messages_1 = require("../constants/response-messages");
 const status_code_1 = require("../constants/status-code");
 const auth_service_1 = __importDefault(require("../services/auth.service"));
-const jtw_util_1 = __importDefault(require("../utils/jtw.util"));
 const email_1 = require("../utils/email");
-const dotenv_1 = __importDefault(require("dotenv"));
+const jtw_util_1 = __importDefault(require("../utils/jtw.util"));
 dotenv_1.default.config();
 async function login(request, response) {
     const backendUrl = process.env.BACKEND_HOME_PAGE;
+    console.warn('backendUrl:::', process.env.BACKEND_HOME_PAGE);
     try {
         const body = request.body;
         const userExists = await auth_service_1.default.findByEmail(body.email);

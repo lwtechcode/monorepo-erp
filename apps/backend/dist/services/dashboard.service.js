@@ -251,7 +251,7 @@ async function getSalesLast7Days(companyId) {
 async function getOverdueAccountsPayable(companyId) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    return await prisma_1.prisma.billToPay.findMany({
+    const notifyAccountsPayable = await prisma_1.prisma.billToPay.findMany({
         where: {
             company_id: companyId,
             due_date: {
@@ -259,13 +259,19 @@ async function getOverdueAccountsPayable(companyId) {
             },
         },
     });
+    return notifyAccountsPayable === null || notifyAccountsPayable === void 0 ? void 0 : notifyAccountsPayable.map(({ description, due_date, value, status }) => ({
+        description: description,
+        due_date: (0, formatters_1.formatDate)(due_date),
+        value: (0, formatters_1.formatMoney)(Number(value)),
+        status,
+    }));
 }
 async function getDueTodayAccountsPayable(companyId) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    return await prisma_1.prisma.billToPay.findMany({
+    const notifyTodayAccountsPayable = await prisma_1.prisma.billToPay.findMany({
         where: {
             company_id: companyId,
             due_date: {
@@ -274,6 +280,12 @@ async function getDueTodayAccountsPayable(companyId) {
             },
         },
     });
+    return notifyTodayAccountsPayable === null || notifyTodayAccountsPayable === void 0 ? void 0 : notifyTodayAccountsPayable.map(({ description, due_date, value, status }) => ({
+        description: description,
+        due_date: (0, formatters_1.formatDate)(due_date),
+        value: (0, formatters_1.formatMoney)(Number(value)),
+        status,
+    }));
 }
 exports.default = {
     getMonthlyRevenue: exports.getMonthlyRevenue,
