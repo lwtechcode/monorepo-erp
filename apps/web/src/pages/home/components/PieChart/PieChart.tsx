@@ -1,4 +1,4 @@
-import { Card, Flex, Typography } from '@ant-ui/react';
+import { Card, EmptyData, Flex, Typography } from '@ant-ui/react';
 import { PieChartProps } from '@mui/x-charts';
 import { PieChart as PieChartComponent } from '@mui/x-charts/PieChart';
 import { COLORS_CHARTS } from '../../../../utils/constants';
@@ -38,6 +38,7 @@ export function mountDataPieChartPaymentMethodPercentage(
 }
 
 export function PieChart({ data, titleChart, loading }: PieChartTypes) {
+  console.log('>>>>', Boolean(data?.series?.length));
   return (
     <Card>
       <Flex vertical>
@@ -45,19 +46,25 @@ export function PieChart({ data, titleChart, loading }: PieChartTypes) {
           {titleChart}
         </Typography.Text>
 
-        <PieChartComponent
-          series={data?.series}
-          colors={COLORS_CHARTS}
-          height={240}
-          loading={loading}
-          sx={{
-            '& .MuiPieArcLabel-root': {
-              fill: '#ffffff', // Define a cor branca no label dentro do arco
-              fontSize: 14, // Ajusta o tamanho do texto (opcional)
-              fontWeight: 'bold', // Adiciona negrito (opcional)
-            },
-          }}
-        />
+        {!Boolean(data?.series?.length) ? (
+          <PieChartComponent
+            series={data.series}
+            colors={COLORS_CHARTS}
+            height={240}
+            loading={loading}
+            sx={{
+              '& .MuiPieArcLabel-root': {
+                fill: '#ffffff',
+                fontSize: 14,
+                fontWeight: 'bold',
+              },
+            }}
+          />
+        ) : (
+          <Flex vertical align="center" justify="center">
+            <EmptyData />
+          </Flex>
+        )}
       </Flex>
     </Card>
   );

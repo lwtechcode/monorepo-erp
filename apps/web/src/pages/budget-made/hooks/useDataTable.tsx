@@ -98,7 +98,7 @@ export function useDataTable({
 
     {
       key: 'created_at',
-      title: 'Data da venda',
+      title: 'Data do orçamento',
       dataIndex: 'created_at',
       ellipsis: true,
     },

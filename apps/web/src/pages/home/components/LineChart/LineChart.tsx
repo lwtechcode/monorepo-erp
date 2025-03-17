@@ -1,4 +1,4 @@
-import { Card, Flex, Typography } from '@ant-ui/react';
+import { Card, EmptyData, Flex, Typography } from '@ant-ui/react';
 import {
   LineChart as LineChartComponent,
   LineChartProps,
@@ -49,14 +49,20 @@ export function LineChart({ data, titleChart, loading }: LineChartTypes) {
           {titleChart}
         </Typography.Text>
 
-        <LineChartComponent
-          xAxis={data?.xAxis}
-          yAxis={data?.yAxis}
-          series={data?.series}
-          colors={COLORS_CHARTS}
-          loading={loading}
-          height={240}
-        />
+        {!Boolean(data?.series?.length) ? (
+          <LineChartComponent
+            xAxis={data?.xAxis}
+            yAxis={data?.yAxis}
+            series={data?.series}
+            colors={COLORS_CHARTS}
+            loading={loading}
+            height={240}
+          />
+        ) : (
+          <Flex vertical align="center" justify="center">
+            <EmptyData />
+          </Flex>
+        )}
       </Flex>
     </Card>
   );

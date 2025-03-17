@@ -1,4 +1,4 @@
-import { Card, Flex, Typography } from '@ant-ui/react';
+import { Card, EmptyData, Flex, Typography } from '@ant-ui/react';
 import {
   BarChart as BarChartComponent,
   BarChartProps,
@@ -209,15 +209,21 @@ export function BarChart({ data, titleChart, loading }: BarChartTypes) {
           {titleChart}
         </Typography.Text>
 
-        <BarChartComponent
-          dataset={data?.dataset}
-          xAxis={data?.xAxis}
-          yAxis={data?.yAxis}
-          series={data?.series}
-          colors={COLORS_CHARTS}
-          loading={loading}
-          height={240}
-        />
+        {!Boolean(data?.series?.length) ? (
+          <BarChartComponent
+            dataset={data?.dataset}
+            xAxis={data?.xAxis}
+            yAxis={data?.yAxis}
+            series={data?.series}
+            colors={COLORS_CHARTS}
+            loading={loading}
+            height={240}
+          />
+        ) : (
+          <Flex vertical align="center" justify="center">
+            <EmptyData />
+          </Flex>
+        )}
       </Flex>
     </Card>
   );
@@ -235,22 +241,23 @@ export default function BarChartHorizotal({
           {titleChart}
         </Typography.Text>
 
-        <BarChartComponent
-          dataset={data?.dataset}
-          yAxis={data?.yAxis}
-          xAxis={data?.xAxis}
-          series={data?.series}
-          layout="horizontal"
-          colors={COLORS_CHARTS}
-          height={240}
-          margin={{ left: 200, right: 50 }}
-          loading={loading}
-          slotProps={{
-            noDataOverlay: {
-              children: 'Nenhum dado disponível para exibição',
-            },
-          }}
-        />
+        {!Boolean(data?.series?.length) ? (
+          <BarChartComponent
+            dataset={data?.dataset}
+            yAxis={data?.yAxis}
+            xAxis={data?.xAxis}
+            series={data?.series}
+            layout="horizontal"
+            colors={COLORS_CHARTS}
+            height={240}
+            margin={{ left: 200, right: 50 }}
+            loading={loading}
+          />
+        ) : (
+          <Flex vertical align="center" justify="center">
+            <EmptyData />
+          </Flex>
+        )}
       </Flex>
     </Card>
   );
