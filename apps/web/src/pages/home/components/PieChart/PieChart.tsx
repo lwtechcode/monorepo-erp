@@ -2,7 +2,10 @@ import { Card, EmptyData, Flex, Typography } from '@ant-ui/react';
 import { PieChartProps } from '@mui/x-charts';
 import { PieChart as PieChartComponent } from '@mui/x-charts/PieChart';
 import { COLORS_CHARTS } from '../../../../utils/constants';
-import { PaymentMethodPercentageTypes } from '../../types';
+import {
+  PaymentMethodPercentageTypes,
+  TopSellingCategoryTypes,
+} from '../../types';
 import { PieChartTypes } from './types';
 
 export function mountDataPieChartPaymentMethodPercentage(
@@ -10,8 +13,7 @@ export function mountDataPieChartPaymentMethodPercentage(
 ): PieChartProps {
   if (!data || data.length === 0) {
     return {
-      xAxis: [{ data: [] }],
-      series: [{ data: [] }],
+      series: [],
     };
   }
 
@@ -37,8 +39,37 @@ export function mountDataPieChartPaymentMethodPercentage(
   };
 }
 
+export function mountDataPierChartTopSellingCategories(
+  data?: Array<TopSellingCategoryTypes>,
+): PieChartProps {
+  if (!data || data.length === 0) {
+    return {
+      series: [],
+    };
+  }
+
+  return {
+    xAxis: [
+      {
+        scaleType: 'band',
+        data: data.map(({ category_name }) => category_name),
+      },
+    ],
+    series: [
+      {
+        data: data?.map(({ category_name, sales_percentage }) => ({
+          value: Number(sales_percentage.toFixed(2)),
+          label: category_name,
+        })),
+        innerRadius: 60,
+        arcLabel: (item) => `${item.value}%`,
+        valueFormatter: ({ value }) => value.toFixed(2).concat('%') || '0.0%',
+      },
+    ],
+  };
+}
+
 export function PieChart({ data, titleChart, loading }: PieChartTypes) {
-  console.log('>>>>', Boolean(data?.series?.length));
   return (
     <Card>
       <Flex vertical>
@@ -46,7 +77,7 @@ export function PieChart({ data, titleChart, loading }: PieChartTypes) {
           {titleChart}
         </Typography.Text>
 
-        {!Boolean(data?.series?.length) ? (
+        {Boolean(data?.series?.length) ? (
           <PieChartComponent
             series={data.series}
             colors={COLORS_CHARTS}

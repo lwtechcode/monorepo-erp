@@ -13,8 +13,7 @@ export function mountDataLineChartSalesLastSevenDays(
 ): LineChartProps {
   if (!data || data.length === 0) {
     return {
-      xAxis: [{ data: [] }],
-      series: [{ data: [] }],
+      series: [],
     };
   }
 
@@ -49,7 +48,7 @@ export function LineChart({ data, titleChart, loading }: LineChartTypes) {
           {titleChart}
         </Typography.Text>
 
-        {!Boolean(data?.series?.length) ? (
+        {Boolean(data?.series?.length) ? (
           <LineChartComponent
             xAxis={data?.xAxis}
             yAxis={data?.yAxis}

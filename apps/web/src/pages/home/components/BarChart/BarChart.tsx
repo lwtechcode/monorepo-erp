@@ -8,7 +8,6 @@ import {
   SalesPerMonthTypes,
   TopClientTypes,
   TopProductsSellingTypes,
-  TopSellingCategoryTypes,
 } from '../../types';
 
 import { COLORS_CHARTS } from '../../../../utils/constants';
@@ -19,8 +18,7 @@ export function mountDataBarChartSalesPerMonth(
 ): BarChartProps {
   if (!data || data.length === 0) {
     return {
-      xAxis: [{ data: [] }],
-      series: [{ data: [] }],
+      series: [],
     };
   }
 
@@ -55,21 +53,7 @@ export function mountDataBarHorizontalChartTopClients(
 ): BarChartProps {
   if (!data || data.length === 0) {
     return {
-      yAxis: [
-        {
-          dataKey: 'cliente',
-          scaleType: 'band', // Mantém o tipo de escala mesmo sem dados
-          data: [],
-        },
-      ],
-
-      series: [
-        {
-          dataKey: 'valor',
-          valueFormatter: (value) => formatMoney(value as number) || 'R$ 0,00',
-        },
-      ],
-      dataset: [],
+      series: [],
     };
   }
 
@@ -104,20 +88,7 @@ export function mountDataBarHorizontalChartTopProductsSelling(
 ): BarChartProps {
   if (!data || data.length === 0) {
     return {
-      yAxis: [
-        {
-          dataKey: 'product',
-          scaleType: 'band',
-          data: [],
-        },
-      ],
-      series: [
-        {
-          dataKey: 'qty',
-          valueFormatter: (value) => String(value).concat('un'),
-        },
-      ],
-      dataset: [],
+      series: [],
     };
   }
 
@@ -150,57 +121,6 @@ export function mountDataBarHorizontalChartTopProductsSelling(
   };
 }
 
-export function mountDataBarHorizontalChartTopSellingCategories(
-  data?: Array<TopSellingCategoryTypes>,
-): BarChartProps {
-  if (!data || data.length === 0) {
-    return {
-      yAxis: [
-        {
-          dataKey: 'category_name',
-          scaleType: 'band',
-          data: [],
-        },
-      ],
-      series: [
-        {
-          dataKey: 'sales_percentage',
-          valueFormatter: (value) => String(value).concat('%'),
-        },
-      ],
-      dataset: [],
-    };
-  }
-
-  return {
-    yAxis: [
-      {
-        scaleType: 'band',
-        dataKey: 'category_name',
-        data: data.map(({ category_name }) => category_name),
-      },
-    ],
-    xAxis: [
-      {
-        scaleType: 'linear',
-        min: 0,
-        tickMinStep: 1, // Garante apenas valores inteiros
-        valueFormatter: (value) => `${value} %`,
-      },
-    ],
-    series: [
-      {
-        dataKey: 'sales_percentage',
-        valueFormatter: (value) => String(value).concat('%'),
-      },
-    ],
-    dataset: data.map(({ category_name, sales_percentage }) => ({
-      category_name: category_name,
-      sales_percentage: Number(sales_percentage),
-    })),
-  };
-}
-
 export function BarChart({ data, titleChart, loading }: BarChartTypes) {
   return (
     <Card>
@@ -209,7 +129,7 @@ export function BarChart({ data, titleChart, loading }: BarChartTypes) {
           {titleChart}
         </Typography.Text>
 
-        {!Boolean(data?.series?.length) ? (
+        {Boolean(data?.series?.length) ? (
           <BarChartComponent
             dataset={data?.dataset}
             xAxis={data?.xAxis}
@@ -229,7 +149,7 @@ export function BarChart({ data, titleChart, loading }: BarChartTypes) {
   );
 }
 
-export default function BarChartHorizotal({
+export function BarChartHorizontal({
   data,
   titleChart,
   loading,
@@ -241,7 +161,7 @@ export default function BarChartHorizotal({
           {titleChart}
         </Typography.Text>
 
-        {!Boolean(data?.series?.length) ? (
+        {Boolean(data?.series?.length) ? (
           <BarChartComponent
             dataset={data?.dataset}
             yAxis={data?.yAxis}

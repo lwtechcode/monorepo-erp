@@ -22,6 +22,11 @@ export const getMonthlyRevenue = async (companyId: string) => {
     },
   });
 
+  // se não houver vendas registradas no período
+  if (sales.length === 0) {
+    return [];
+  }
+
   // Formata os dados agrupando por mês e preenchendo meses sem vendas
   const monthlyRevenue: { month: string; revenue: number }[] = [];
 
@@ -40,6 +45,9 @@ export const getMonthlyRevenue = async (companyId: string) => {
 export const getTopSellingProducts = async (company_id: string) => {
   const topProducts = await prisma.productSale.groupBy({
     by: ['product_id'],
+    where: {
+      company_id: company_id,
+    },
     _sum: {
       qty: true,
     },
@@ -54,7 +62,9 @@ export const getTopSellingProducts = async (company_id: string) => {
   const productsWithDetails = await Promise.all(
     topProducts.map(async (product) => {
       const productDetails = await prisma.product.findUnique({
-        where: { id: product.product_id, company_id },
+        where: {
+          id: product.product_id,
+        },
         select: {
           id: true,
           name: true,
@@ -251,6 +261,11 @@ export async function getSalesLast7Days(companyId: string) {
         created_at: 'asc', // Ordena as vendas pela data
       },
     });
+
+    // se não houver vendas registradas no período
+    if (sales.length === 0) {
+      return [];
+    }
 
     // Criar uma lista dos últimos 7 dias
     const allDates = Array.from({ length: 7 }).map((_, i) => {

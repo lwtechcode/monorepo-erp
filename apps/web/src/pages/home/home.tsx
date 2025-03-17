@@ -4,17 +4,16 @@ import clsx from 'clsx';
 import { WrapperLoading } from '../../components';
 import {
   BarChart,
+  BarChartHorizontal,
   LineChart,
   mountDataBarChartSalesPerMonth,
+  mountDataBarHorizontalChartTopClients,
   mountDataBarHorizontalChartTopProductsSelling,
   mountDataLineChartSalesLastSevenDays,
   mountDataPieChartPaymentMethodPercentage,
+  mountDataPierChartTopSellingCategories,
   PieChart,
 } from './components';
-import BarChartHorizotal, {
-  mountDataBarHorizontalChartTopClients,
-  mountDataBarHorizontalChartTopSellingCategories,
-} from './components/BarChart/BarChart';
 import { useGetChartsDashboard, useGetNotificationsDashboard } from './hooks';
 
 export default function Home() {
@@ -83,7 +82,7 @@ export default function Home() {
           </Grid.Col>
 
           <Grid.Col span={24}>
-            <BarChartHorizotal
+            <BarChartHorizontal
               titleChart="Top 5 clientes"
               data={
                 mountDataBarHorizontalChartTopClients(
@@ -94,10 +93,10 @@ export default function Home() {
           </Grid.Col>
 
           <Grid.Col span={12}>
-            <BarChartHorizotal
+            <PieChart
               titleChart="Top 5 categorias"
               data={
-                mountDataBarHorizontalChartTopSellingCategories(
+                mountDataPierChartTopSellingCategories(
                   chartsDashboard?.topSellingCategories,
                 ) as any
               }
@@ -105,7 +104,7 @@ export default function Home() {
           </Grid.Col>
 
           <Grid.Col span={12}>
-            <BarChartHorizotal
+            <BarChartHorizontal
               titleChart="Top 5 produtos"
               data={
                 mountDataBarHorizontalChartTopProductsSelling(

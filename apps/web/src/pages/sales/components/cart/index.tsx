@@ -99,8 +99,6 @@ export function Cart({
             ? calcTaxDiscount
             : rest.value_unit;
 
-          console.log(' Number(rest.discount_tax)', Number(rest.discount_tax));
-
           return {
             key: index,
             id: rest.id,

@@ -20,7 +20,7 @@ import { useStateCartProducts, useStateFilterProducts } from './hooks';
 import { calcTaxDiscount, calcTotalListProducts } from './utils';
 
 export default function SalesPage() {
-  const { isBudget, idBudget } = useLocation().state;
+  const stateLocation = useLocation()?.state;
 
   const [tableParams, setTableParams] = useState<TableParams<any>>({
     pagination: {
@@ -50,8 +50,8 @@ export default function SalesPage() {
   );
 
   const { budgetIdMade, isFetchingBudgetIdMade } = useGetByIdBudgetMade({
-    idBudgetMade: idBudget,
-    enabled: isBudget,
+    idBudgetMade: stateLocation?.idBudget,
+    enabled: stateLocation?.isBudget,
   });
 
   const { products, isLoadingProducts } = useProductsMutation({
@@ -195,13 +195,14 @@ export default function SalesPage() {
       )
     : [];
 
-  const items = isBudget ? itemsBudget : itemsProducts;
+  const items = stateLocation?.isBudget ? itemsBudget : itemsProducts;
 
   const { grossValue, qtyTotal } = calcTotalListProducts(
     stateCart?.context?.products,
   );
 
-  const isLoading = isLoadingProducts || (isBudget && isFetchingBudgetIdMade);
+  const isLoading =
+    isLoadingProducts || (stateLocation?.isBudget && isFetchingBudgetIdMade);
 
   function handleSetDefaultProductsBudget() {
     return budgetIdMade?.products_sale_budgets?.map(
@@ -221,7 +222,7 @@ export default function SalesPage() {
   }
 
   useEffect(() => {
-    if (isBudget) {
+    if (stateLocation?.isBudget) {
       handleSetDefaultProductsBudget();
     }
   }, []);
